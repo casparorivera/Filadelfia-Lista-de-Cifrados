@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Filadelfia - Listados</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#123a68">
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100dvh; display:flex; align-items:center; justify-content:center;
+    font-family:Arial,Helvetica,sans-serif;
+    background:linear-gradient(150deg,#0b2035,#123a68 60%,#1a3d5c);
+    padding:24px 16px;
+  }
+  .tarjeta{
+    width:100%; max-width:360px; background:#fff; border-radius:18px;
+    padding:32px 28px 28px; box-shadow:0 20px 50px rgba(0,0,0,.35); text-align:center;
+  }
+  .logo{width:88px;height:88px;border-radius:20px;margin-bottom:14px;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+  .ministerio{font-size:11px;letter-spacing:1.5px;color:#5a6b80;font-weight:700}
+  h1{margin:4px 0 22px;font-size:20px;color:#123a68}
+  label{display:block;text-align:left;font-size:13px;font-weight:700;color:#26364a;margin-bottom:6px}
+  input{width:100%;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px}
+  input:focus{outline:2px solid #2f6fc0;border-color:#2f6fc0}
+  button{
+    width:100%;margin-top:18px;padding:13px;border:none;border-radius:10px;
+    background:#2f6fc0;color:#fff;font-size:15px;font-weight:700;cursor:pointer;
+  }
+  .estado{margin-top:14px;font-size:13.5px;padding:10px;border-radius:8px;display:none;background:#fdecec;color:#9b1c1c}
+</style>
+</head>
+<body>
+
+<div class="tarjeta">
+  <img class="logo" src="icons/icon-192.png" alt="Filadelfia Listados">
+  <div class="ministerio">MINISTERIO DE ALABANZA FILADELFIA CENTRAL</div>
+  <h1>Filadelfia - Listados</h1>
+
+  <form onsubmit="return false">
+    <label for="clave">Contraseña de acceso</label>
+    <input type="password" id="clave" autocomplete="current-password" autofocus>
+    <button type="button" onclick="entrar()">Entrar</button>
+  </form>
+  <div class="estado" id="estado"></div>
+</div>
+
+<script>
+  const CLAVE_ACCESO = 'fila2026';
+
+  function entrar(){
+    const valor = document.getElementById('clave').value.trim();
+    if(valor === CLAVE_ACCESO){
+      try{ localStorage.setItem('filadelfiaListadosAcceso', 'ok'); }catch(e){}
+      window.location.href = 'index.html';
+    } else {
+      const est = document.getElementById('estado');
+      est.textContent = 'Contraseña incorrecta.';
+      est.style.display = 'block';
+    }
+  }
+
+  document.getElementById('clave').addEventListener('keydown', ev => { if(ev.key === 'Enter') entrar(); });
+
+  // Si ya entró antes en este celular, no le vuelve a pedir.
+  try{
+    if(localStorage.getItem('filadelfiaListadosAcceso') === 'ok') window.location.href = 'index.html';
+  }catch(e){}
+</script>
+
+</body>
+</html>
